@@ -1,4 +1,4 @@
-import numpy as numpy
+import numpy as np
 
 
 def clz_to_prob(clz):
@@ -94,7 +94,7 @@ def report_regressor( plf, x, y, cv=True ):
 
 	else:
 		# 交差検証のスコアを表示するコード
-		kf = kFold( n_splits=10, random_state=1, shuffle=True)
+		kf = kFold( n_splits=10, random_state=1, shuffle=True) # Generate indices to split data into training and test set.
 		r2 = []
 		ma = []
 		n = []
@@ -109,4 +109,3 @@ def report_regressor( plf, x, y, cv=True ):
 		print( 'CV Score:')
 		print( ' R2 Score = %f'%( np.average( r2, weights=n ) ) )
 		print( ' Mean Squared Error = %f'%( np.average( ma, weights=n ) ) )
-		
