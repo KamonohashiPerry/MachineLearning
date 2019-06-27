@@ -25,14 +25,14 @@ def get_base_args():
 	ps.add_argument( '--header', '-e', type=int, default=None, help='CSV header' )
 	ps.add_argument( '--indexcol', '-x', type=int, default=None, help='CSV index_col' )
 	ps.add_argument( '--regression', '-r', action='store_true', help='Regression' )
-	ps.add_argument( '--crossvalidate', '-c', action='store_ture', help='Use Cross Vlidation' )
+	ps.add_argument( '--crossvalidate', '-c', action='store_true', help='Use Cross Vlidation' )
 	return ps
 
 
 def report_classifier( plf, x, y, clz, cv=True):
 	import warnings
 	from sklearn.metrics import classification_report, f1_score, accuracy_score
-	from sklearn.exceptions import UnderfinedMetricWarning
+	from sklearn.exceptions import UndefinedMetricWarning
 	from sklearn.model_selection import KFold
 
 	if not cv:
@@ -45,7 +45,7 @@ def report_classifier( plf, x, y, clz, cv=True):
 		y = y.argmax( axis = 1) # axis=1でそのリストの中での最大値を取る。
 
 		with warnings.catch_warnings():
-			warnings.simplefilter( 'ignore', category=UnderfinedMetricWarning )
+			warnings.simplefilter( 'ignore', category=UndefinedMetricWarning )
 			rp = classification_report( y, z, target_names=clz ) # スコアを取得できる
 
 		print( 'Train Score:' )
@@ -53,15 +53,15 @@ def report_classifier( plf, x, y, clz, cv=True):
 
 	else:
 		# 交差検証のスコアを表示するコード
-		kf = kFold( n_splits = 10, random_state = 1, shuffle = True ) # sklearn
+		kf = KFold( n_splits = 10, random_state = 1, shuffle = True ) # sklearn
 		f1 = []
 		pr = []
 		n = []
 		for train_index, test_index in kf.split( x ): # Generate indices to split data into training and test set.
 			x_train, x_test = x[train_index], x[test_index]
 			y_train, y_test = y[train_index], y[test_index]
-			plt.fit( x_train, y_train )
-			z = plt.predict( x_test )
+			plf.fit( x_train, y_train )
+			z = plf.predict( x_test )
 			z = z.argmax( axis = 1 )
 			y_test = y_test.argmax( axis=1 )
 			f1.append( f1_score( y_test, z, average='weighted' ) )
