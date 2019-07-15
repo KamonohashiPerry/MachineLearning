@@ -8,3 +8,5 @@ __pycache__/support.cpython-36.pyc
 Ensemble_learning_introduction_to_Algorithms_v1.ipynb
 
 Ensemble_learning_introduction_to_Algorithms_v1.ipynb
+
+*.pyc

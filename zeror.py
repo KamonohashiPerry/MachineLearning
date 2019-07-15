@@ -25,12 +25,12 @@ if __name__ == '__main__':
 	df = pd.read_csv( args.input, sep=args.separator, header=args.header,index_col=args.indexcol)
 	x = df[ df.columns[:-1]].values
 
-if not args.regression:
-	y, clz = support.clz_to_prob( df[df.columns[ -1 ]])
-	plf = ZeroRule()
-	support.report_classifier( plf, x, y, clz, args.crossvalidate)
+	if not args.regression:
+		y, clz = support.clz_to_prob( df[df.columns[ -1 ]])
+		plf = ZeroRule()
+		support.report_classifier( plf, x, y, clz, args.crossvalidate)
 
-else:
-	y = df[df.columns[-1]].values.reshape((-1, 1))
-	plf = ZeroRule()
-	support.report_regressor(plf, x, y, args.crossvalidate)
+	else:
+		y = df[df.columns[-1]].values.reshape((-1, 1))
+		plf = ZeroRule()
+		support.report_regressor(plf, x, y, args.crossvalidate)
