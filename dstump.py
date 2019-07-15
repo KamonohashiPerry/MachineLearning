@@ -115,10 +115,10 @@ class DecisionStump:
 
 # 直接実行する際の挙動
 if __name__ == '__main__':
-	import pandas as ds
+	import pandas as pd
 	ps = support.get_base_args()
-	ps.add_argument(' --metric', '-l', default='', help='Metric function')
-	ps.add_argument(' --leaf', '-l', default='', help='Leaf class')
+	ps.add_argument('--metric', '-m', default='', help='Metric function')
+	ps.add_argument('--leaf', '-l', default='', help='Leaf class')
 	args = ps.parse_args()
 
 	df = pd.read_csv( args.input, sep=args.separator, header=args.header,index_col=args.indexcol)
